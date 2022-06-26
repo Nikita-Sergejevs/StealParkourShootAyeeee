@@ -19,8 +19,6 @@ public class PlayerMovement : MonoBehaviour
     public float crouchSpeed;
     public float crouchYScale;
     private float startYscale;
-    private float startYScaleCam;
-    private float crouchYScaleCam;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -49,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         readyToJump = true;
         startYscale = transform.localScale.y;
-        startYScaleCam = transform.localScale.y;
     }
 
     private void Update()
@@ -178,6 +175,4 @@ public class PlayerMovement : MonoBehaviour
     {
         readyToJump = true;
     }
-
-   
 }
