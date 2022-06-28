@@ -25,10 +25,13 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crounchKey = KeyCode.C;
 
+    [Header("References")]
+    public Climbing climbingScript;
+
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    public bool grounded;
 
     public float groundDrag;
 
@@ -84,8 +87,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void MyInput()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal") * Time.deltaTime;
+        verticalInput = Input.GetAxisRaw("Vertical") * Time.deltaTime;
 
         // Когда в прижке
         if(Input.GetKey(jumpKey) && readyToJump && grounded)
@@ -137,6 +140,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
+        // Отключаем все управление пока отходим от стены
+        if(climbingScript.exitingWall)
+        {
+            return;
+        }
+
         // Расчитываем направление движения
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
