@@ -22,6 +22,9 @@ public class Sliding : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
 
+    [Header("Reference")]
+    public PlayerCam cam;
+
     private bool sliding;
 
     private void Start()
@@ -61,12 +64,19 @@ public class Sliding : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z); 
         rb.AddForce(Vector3.down * 5, ForceMode.Impulse);
         sliderTimer = maxSlideTime;
+
+        // Fov
+        cam.DoFov(85);
     }
 
     private void StopSlide()
     {
         sliding = false;
         transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+
+        // Убраем Fov
+        cam.DoFov(75);
+        cam.DoTile(0);
     }
 
     private void SlidingMovement()

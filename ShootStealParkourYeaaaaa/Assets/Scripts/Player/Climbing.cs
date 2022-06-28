@@ -7,6 +7,7 @@ public class Climbing : MonoBehaviour
     [Header("References")]
     public Transform orientation;
     public Rigidbody rb;
+    public PlayerCam cam;
     public PlayerMovement pm;
     public LayerMask whatIsWall;
 
@@ -109,6 +110,9 @@ public class Climbing : MonoBehaviour
 
         lastWall = frontWallHit.transform;
         lastWallNormal = frontWallHit.normal;
+
+        // Fov
+        cam.DoFov(65);
     }
 
     private void ClimbingMovement()
@@ -119,6 +123,9 @@ public class Climbing : MonoBehaviour
     private void StopClimbing()
     {
         climbing= false;
+
+        // Убираем Fov
+        cam.DoFov(75);
     }
 
     private void ClimbJump()

@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed;
     public float walkSpeed;
     public float sprintSpeed;
+    public float wallrunSpeed;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("References")]
     public Climbing climbingScript;
+    public PlayerCam cam;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -80,10 +82,12 @@ public class PlayerMovement : MonoBehaviour
         walking,
         sprinting,
         crouching,
+        wallrunnig,
         air
     }
 
     public MovementState state;
+    public bool wallrunning;
 
     private void MyInput()
     {
@@ -113,28 +117,39 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler()
     {
+        // Мод - Бег по стене
+        if(wallrunning)
+        {
+            state = MovementState.wallrunnig;
+            moveSpeed = wallrunSpeed;
+        }
         // Мод - Присят
         if(Input.GetKey(crounchKey) && grounded)
         {
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
+            cam.DoFov(70);
         }
         // Мод - Бег
         else if(grounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
+            cam.DoFov(85);
         }
         // Мод - Хотьба
         else if(grounded)
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
+            cam.DoFov(75);
+            cam.DoTile(0);
         }
         // Мод - воздух
         else
         {
             state = MovementState.air;
+            cam.DoFov(90);
         }
     }
 
@@ -178,6 +193,7 @@ public class PlayerMovement : MonoBehaviour
         // Сбрасиваем скорость Y
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        cam.DoFov(85);
     }
 
     private void ResetJump()
