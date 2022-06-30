@@ -160,10 +160,8 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-
         // Расчитываем направление движения
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
         // Когда на земле
         if(grounded)
         {
