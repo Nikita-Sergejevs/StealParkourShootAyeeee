@@ -126,11 +126,6 @@ public class WallRunning : MonoBehaviour
         pm.wallrunning = true;
         wallRunTimer = maxWallRunTime;
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-
-        // Fov
-        cam.DoFov(85);
-        if (wallLeft) cam.DoTile(-10);
-        if (wallRight) cam.DoTile(10);
     }
 
     private void WallRunningMovement()
@@ -156,10 +151,6 @@ public class WallRunning : MonoBehaviour
     private void StopWallRun()
     {
         pm.wallrunning = false;
-
-        // убираем Fov
-        cam.DoFov(75);
-        cam.DoTile(0);
     }
 
     private void WallJump()

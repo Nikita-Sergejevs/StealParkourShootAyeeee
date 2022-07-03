@@ -32,7 +32,7 @@ public class Sliding : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
 
-        startYScale = base.transform.localScale.y;
+        startYScale = base.transform.localScale.y;  
     }
 
     private void Update()
@@ -61,22 +61,16 @@ public class Sliding : MonoBehaviour
     private void StartSlide()
     {
         sliding = true;
-        transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z); 
+        transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
         rb.AddForce(Vector3.down * 5, ForceMode.Impulse);
         sliderTimer = maxSlideTime;
 
-        // Fov
-        cam.DoFov(85);
     }
 
     private void StopSlide()
     {
         sliding = false;
         transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
-
-        // Убраем Fov
-        cam.DoFov(75);
-        cam.DoTile(0);
     }
 
     private void SlidingMovement()

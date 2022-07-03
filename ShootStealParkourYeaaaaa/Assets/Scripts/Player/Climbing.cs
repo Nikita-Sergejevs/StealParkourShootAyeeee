@@ -110,9 +110,6 @@ public class Climbing : MonoBehaviour
 
         lastWall = frontWallHit.transform;
         lastWallNormal = frontWallHit.normal;
-
-        // Fov
-        cam.DoFov(65);
     }
 
     private void ClimbingMovement()
@@ -123,9 +120,6 @@ public class Climbing : MonoBehaviour
     private void StopClimbing()
     {
         climbing= false;
-
-        // Убираем Fov
-        cam.DoFov(75);
     }
 
     private void ClimbJump()
